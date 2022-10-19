@@ -2,12 +2,15 @@ const container = document.querySelector("#container");
 const resetButton = document.querySelector("#resetButton");
 const rgbButton = document.querySelector("#rgbButton");
 const redButton = document.querySelector("#redButton");
+const inputSlider = document.querySelector("#input_slider");
+const labelSlider = document.querySelector("#label_slider");
 
-function createDivs(rows, columns){
-    for (let i = 0; i < rows * columns; i++) {
+
+function createDivs(grid){
+    for (let i = 0; i < grid * grid; i++) {
         let divs = document.createElement("div");
         divs.setAttribute("class", 
-        "h-8 w-8 border border-gray-600")
+        "flex h-8 w-8 border border-gray-600")
         divs.classList.add("gridSquare");
         container.appendChild(divs);
         divs.addEventListener("mouseenter", function() {
@@ -24,8 +27,13 @@ function resetGrid() {
 }
 
 
-function makeSquares(input){
-    let 
+function updateSliderNumber() {
+    labelSlider.innerText = `${inputSlider.value} x ${inputSlider.value}`;
+}
+
+function sliderChangeSize(size){
+    container.innerHTML = "";
+    createDivs(size);
 }
 
 
@@ -53,8 +61,10 @@ function redColor() {
 }
 
 
-createDivs(16, 16);
+createDivs(16);
 
+inputSlider.addEventListener("mousemove", (e) =>  updateSliderNumber(e.target.value));
+inputSlider.addEventListener("change", (e) => sliderChangeSize(e.target.value));
 resetButton.addEventListener("click", resetGrid);
 rgbButton.addEventListener("click", rgbColor);
 redButton.addEventListener("click", redColor);
